@@ -1,7 +1,7 @@
 # Turtle Race Game
 import turtle
 from turtle import Turtle, Screen
-from random import choice
+from random import randint
 
 
 def set_turtle_start(p_turtle, turtle_color, y_pos):
@@ -13,7 +13,6 @@ def set_turtle_start(p_turtle, turtle_color, y_pos):
 
 
 def race():
-    winner_color = ""
     start_y_pos = -120
     for turtle_index in range(0, 7):
         racing_turtle = Turtle(shape="turtle")
@@ -23,24 +22,22 @@ def race():
 
     is_race_on = True
     while is_race_on:
-        for turtle_index in range(0, 7):
-            turtle_list[turtle_index].forward(choice(turtle_move))
+        for colored_turtle in turtle_list:
+            colored_turtle.forward(randint(1, 10))
 
-            if turtle_list[turtle_index].xcor() > 235:
+            if colored_turtle.xcor() > 230:
                 is_race_on = False
-                winner_color = turtle_colors[turtle_index]
-
-    if user_bet.lower() == winner_color.lower():
-        print("You win!")
-    else:
-        print("Sorry, you loose!")
+                winner_color = colored_turtle.pencolor()
+                if user_bet.lower() == winner_color.lower():
+                    print(f"You've won! The {winner_color.lower()} turtle is the winner!")
+                else:
+                    print(f"You've lost! The {winner_color.lower()} turtle is the winner!")
 
 
 screen = Screen()
 screen.setup(width=500, height=400)
 
 turtle_list = []
-turtle_move = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 turtle_colors = ["Blue", "Green", "Red", "Yellow", "Violet", "Orange", "Turquoise"]
 
 user_bet = turtle.textinput(title="Make your bet", prompt="Which turtle will win the race? Enter a color: ")
